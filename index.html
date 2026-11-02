@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statistics for Data Science: 40-Question Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3f2;--card:#fff;--ink:#14213d;--mute:#5b6678;--line:#d3dcdc;--acc:#1f6f8b;--acc2:#e7f2f5;--ok:#2e7d5b;--okbg:#e4f3ec;--bad:#b23a48;--badbg:#f9e6e8}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1720;--card:#17222e;--ink:#e8eef5;--mute:#9aa8ba;--line:#2a3a4a;--acc:#6cc0dc;--acc2:#1b2e3b;--ok:#5fd0a0;--okbg:#14332a;--bad:#f08a96;--badbg:#3a1d24}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 Inter,system-ui,sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+h1,h2,h3{font-family:Newsreader,Georgia,serif;line-height:1.15;margin:0}
+.wrap{max-width:760px;margin:0 auto;padding:28px 18px 60px}
+.hero h1{font-size:clamp(2.1rem,7vw,3.4rem);font-weight:700;letter-spacing:-.01em}
+.hero p{color:var(--mute);max-width:52ch;margin:14px 0 0}
+.curve{width:100%;height:auto;margin:22px 0 6px;display:block}
+.curve .area{fill:var(--acc);opacity:.22}.curve .line{fill:none;stroke:var(--acc);stroke-width:3}.curve .ax{stroke:var(--line);stroke-width:2}
+.curve text{fill:var(--mute);font:500 13px Inter,sans-serif}
+.btn{font:600 1rem Inter,sans-serif;border:0;border-radius:10px;padding:13px 22px;cursor:pointer;background:var(--acc);color:#fff;min-height:48px}
+@media(prefers-color-scheme:dark){.btn{color:#0f1720}}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn:hover{filter:brightness(1.08)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:26px 0 18px}
+.topic{text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;color:var(--ink);font:inherit}
+.topic:hover{border-color:var(--acc)}
+.topic b{display:block;font:700 1.15rem Newsreader,serif}.topic span{color:var(--mute);font-size:.88rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.9rem;color:var(--mute)}
+.bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin:10px 0 24px}
+.bar i{display:block;height:100%;background:var(--acc);transition:width .3s}
+.q{font-size:clamp(1.3rem,4.5vw,1.7rem);font-weight:500;margin-bottom:18px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;color:var(--ink);font:inherit;min-height:52px}
+.opt:hover:not(:disabled){border-color:var(--acc);background:var(--acc2)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:600;font-size:.85rem}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.ok .k{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.no{border-color:var(--bad);background:var(--badbg)}.opt.no .k{background:var(--bad);border-color:var(--bad);color:#fff}
+.fb{margin-top:16px;padding:12px 16px;border-radius:10px;font-size:.95rem;background:var(--acc2)}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
+.score{font:700 clamp(4rem,18vw,7rem)/1 Newsreader,serif;margin:8px 0 0}
+.score small{font-size:.35em;color:var(--mute);font-weight:500}
+.tb{margin:22px 0}.tb .lbl{display:flex;justify-content:space-between;font-size:.92rem;margin-bottom:4px}
+.rev{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0;font-size:.95rem}
+.rev .q2{font-weight:600;margin-bottom:6px}.rev .a{color:var(--bad)}.rev .c{color:var(--ok)}
+.hide{display:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<section id="home" class="hero">
+  <h1>Statistics for Data Science</h1>
+  <p>Forty questions on sampling, confidence intervals, Z and t tests, hypothesis testing, and correlation. You get feedback after every answer.</p>
+  <svg class="curve" viewBox="0 0 600 170" role="img" aria-label="Bell curve with the middle 95 percent shaded">
+    <path class="area" d="M205,148 L205,140 C230,120 255,60 300,20 C345,60 370,120 395,140 L395,148Z"/>
+    <path class="line" d="M20,148 C120,146 200,128 240,80 C265,45 285,22 300,20 C315,22 335,45 360,80 C400,128 480,146 580,148"/>
+    <line class="ax" x1="10" x2="590" y1="148" y2="148"/>
+    <text x="300" y="166" text-anchor="middle">95% of values fall within ±1.96 standard deviations</text>
+  </svg>
+  <div class="topics" id="topics"></div>
+  <div class="row"><button class="btn" id="startAll">Start all 40 questions</button><button class="btn alt" id="shuf">Shuffle question order: off</button></div>
+</section>
+
+<section id="quiz" class="hide" aria-live="polite">
+  <div class="top"><span id="tname"></span><span id="cnt"></span></div>
+  <div class="bar"><i id="prog"></i></div>
+  <h2 class="q" id="qtext"></h2>
+  <div class="opts" id="opts"></div>
+  <div class="fb hide" id="fb"></div>
+  <div class="row" style="margin-top:20px"><button class="btn hide" id="next">Next question</button><button class="btn alt" id="quit">Quit to menu</button></div>
+</section>
+
+<section id="result" class="hide">
+  <h1 style="font-size:1.4rem;color:var(--mute);font-weight:500">Your score</h1>
+  <p class="score"><span id="sc"></span><small id="of"></small></p>
+  <h2 id="band" style="margin-top:6px"></h2>
+  <div id="tbars"></div>
+  <div class="row"><button class="btn" id="retry">Try again</button><button class="btn alt" id="rwrong">Retry missed questions</button><button class="btn alt" id="home2">Back to menu</button></div>
+  <h2 style="margin:34px 0 6px" id="revh"></h2>
+  <div id="rev"></div>
+</section>
+
+</main>
+<script>
+const T=["Sampling","Confidence intervals","Z-test","t-test","Hypothesis testing","Correlation"];
+// [topic, question, [options], correctIndex, optional note]
+const Q=[
+[0,"A researcher selects every 10th customer from an ordered customer list. Which sampling method is used?",["Simple random sampling","Systematic sampling","Cluster sampling","Convenience sampling"],1],
+[0,"A school divides students into grade levels and randomly selects students from every grade. Which method is this?",["Stratified sampling","Cluster sampling","Convenience sampling","Snowball sampling"],0],
+[0,"A researcher randomly selects 5 entire classrooms and surveys every student in those classrooms. Which method is used?",["Systematic sampling","Simple random sampling","Cluster sampling","Quota sampling"],2],
+[0,"Which sampling method gives every member of the population an equal chance of selection?",["Convenience sampling","Simple random sampling","Judgment sampling","Quota sampling"],1],
+[0,"A survey is conducted by asking people who are easiest to reach at a shopping mall. What is the main concern?",["High precision","Selection bias","Random assignment","Lower sampling error"],1],
+[0,"A population contains 60% urban and 40% rural residents. A sample is selected in the same proportions. Which method is most suitable?",["Stratified sampling","Cluster sampling","Snowball sampling","Systematic sampling"],0],
+[0,"What is the main purpose of selecting a sample instead of studying an entire population?",["To eliminate all errors","To reduce time and cost","To guarantee unbiased results","To avoid data collection"],1],
+[0,"A sample statistic is used to estimate a population parameter. What is this process called?",["Census","Statistical inference","Data cleaning","Random assignment"],1],
+[0,"Which situation is most likely to produce non-response bias?",["Every selected person responds","Many selected people with particular views do not respond","A sample is selected randomly","The population is small"],1],
+[0,"A researcher recruits participants through referrals from existing participants, often for a hard-to-reach population. Which method is this?",["Snowball sampling","Systematic sampling","Stratified sampling","Cluster sampling"],0],
+[1,"What does a 95% confidence level mean in repeated sampling?",["95% of sample values are correct","95% of intervals constructed by the method would contain the true parameter","The population mean changes 95% of the time","The sample mean is always within 5% of the population mean"],1],
+[1,"A confidence interval for a population mean is (48, 56). What is the point estimate at the center of this interval?",["48","50","52","56"],2,"The center is (48 + 56) / 2 = 52."],
+[1,"If the confidence level increases from 95% to 99%, while other factors stay constant, what generally happens to the interval width?",["It becomes narrower","It becomes wider","It becomes zero","It stays exactly the same"],1],
+[1,"Which change generally reduces the margin of error for a mean, assuming other conditions remain constant?",["Smaller sample size","Larger sample size","Higher confidence level","Greater population variability"],1],
+[1,"A sample mean is 100, the standard error is 4, and the critical value is 2. What is the margin of error?",["2","4","8","100"],2,"Margin of error = critical value × standard error = 2 × 4 = 8."],
+[1,"A 95% confidence interval for average delivery time is 28 to 34 minutes. Which is the best interpretation?",["Every delivery takes 28 to 34 minutes","The method gives a plausible range of values for the population mean","95% of deliveries take 28 to 34 minutes","The sample mean must be 31 minutes"],1],
+[1,"When the population standard deviation is unknown and the population is approximately normal, which distribution is commonly used for a mean confidence interval?",["Chi-square","t-distribution","Uniform distribution","Poisson distribution"],1],
+[1,"For a fixed standard deviation and confidence level, what happens to the standard error of the sample mean as sample size increases?",["It increases","It decreases","It becomes equal to the standard deviation","It does not change"],1],
+[2,"A one-sample Z-test for a population mean is most appropriate when which condition is met?",["Population standard deviation is known and sampling conditions are suitable","Population standard deviation is always unknown","The sample contains only categorical data","The observations are paired"],0],
+[2,"A sample has mean 54, population mean under H₀ is 50, known population SD is 8, and n = 16. What is the Z statistic?",["0.5","1","2","4"],2,"Z = (54 − 50) / (8 / √16) = 4 / 2 = 2. The original answer key lists B (1), which does not match this calculation, so this page uses 2."],
+[2,"For a two-tailed Z-test at α = 0.05, what are the approximate critical values?",["±1.00","±1.645","±1.96","±2.576"],2],
+[2,"A Z-test produces p = 0.03 with α = 0.05. What decision should be made?",["Reject H₀","Fail to reject H₀","Accept H₀ as certainly true","Increase the sample mean"],0],
+[2,"In a standard normal distribution, approximately what proportion of observations lies within 1.96 standard deviations of the mean?",["90%","95%","97.5%","99.9%"],1],
+[2,"A researcher tests whether a population proportion equals 0.50 using a sufficiently large random sample. Which test is commonly appropriate?",["One-proportion Z-test","Paired t-test","Independent t-test","Pearson correlation test"],0],
+[3,"A researcher compares the average test score of one class with a benchmark score. Population standard deviation is unknown. Which test is suitable?",["One-sample t-test","Independent t-test","Paired t-test","Z-test for proportions"],0],
+[3,"The same 25 employees are measured before and after training. Which test compares their mean scores?",["Independent t-test","Paired t-test","One-sample Z-test","Chi-square test"],1],
+[3,"Two separate groups of customers are compared on average spending. Which test is generally suitable?",["Paired t-test","Independent two-sample t-test","One-sample t-test","One-proportion Z-test"],1],
+[3,"Why does the t-distribution have heavier tails than the standard normal distribution, especially with small samples?",["It accounts for extra uncertainty from estimating population standard deviation","It is only used for categorical variables","It assumes zero variability","It always has a larger mean"],0],
+[3,"For a one-sample t-test with 15 observations, what are the degrees of freedom?",["14","15","16","30"],0,"Degrees of freedom = n − 1 = 14."],
+[3,"Two independent groups may have unequal variances. Which version of the independent t-test is a good default?",["Pooled t-test assuming equal variances","Welch's t-test","Paired t-test","One-sample t-test"],1],
+[4,"What is the null hypothesis (H₀) usually designed to represent?",["A claim of an effect in every case","A baseline claim such as no difference or no effect","The researcher's preferred result","The sample statistic"],1],
+[4,"A researcher wants to test whether the mean waiting time is greater than 20 minutes. Which alternative hypothesis is appropriate?",["H₁: µ = 20","H₁: µ < 20","H₁: µ > 20","H₁: µ ≠ 0"],2],
+[4,"What does the significance level α represent?",["Probability of a Type I error threshold","Probability that H₀ is true","The sample mean","The test statistic"],0],
+[4,"A Type I error occurs when a researcher:",["Fails to reject a false null hypothesis","Rejects a true null hypothesis","Uses a sample that is too large","Calculates a confidence interval"],1],
+[4,"A Type II error occurs when a researcher:",["Rejects a true null hypothesis","Fails to reject a false null hypothesis","Rejects a false null hypothesis","Chooses a significance level"],1],
+[4,"A p-value of 0.20 is obtained at α = 0.05. Which conclusion is appropriate?",["Reject H₀ because 0.20 is large","Fail to reject H₀ because p-value exceeds α","Prove H₀ is true","Conclude the effect is exactly zero"],1],
+[5,"If Pearson's correlation coefficient is close to -1, what does it indicate?",["Strong positive linear relationship","Strong negative linear relationship","No relationship of any kind","A perfect nonlinear relationship"],1],
+[5,"What does a correlation coefficient near 0 indicate?",["No linear association is apparent","The variables are definitely independent","One variable causes the other","Both variables have zero variance"],0],
+[5,"A study finds a positive correlation between ice-cream sales and sunburn cases. What is a sensible explanation?",["Ice cream directly causes sunburn","Sunburn directly causes ice-cream sales","A third factor such as hot sunny weather may influence both","Correlation proves a causal link"],2],
+[5,"Which statistic measures the strength and direction of a linear relationship between two numerical variables?",["Median","Pearson correlation coefficient","Standard deviation","Mode"],1]
+];
+const $=id=>document.getElementById(id),L="ABCD";
+let set=[],i=0,ans=[],shuffle=false,locked=false,label="All topics";
+const counts=T.map((_,t)=>Q.filter(q=>q[0]==t).length);
+$("topics").innerHTML=T.map((n,t)=>`<button class="topic" data-t="${t}"><b>${n}</b><span>${counts[t]} questions</span></button>`).join("");
+function show(id){["home","quiz","result"].forEach(s=>$(s).classList.toggle("hide",s!=id));window.scrollTo(0,0)}
+function start(list,name){set=shuffle?[...list].sort(()=>Math.random()-.5):[...list];label=name;i=0;ans=[];show("quiz");render()}
+function render(){
+ const q=set[i];locked=false;
+ $("tname").textContent=T[q[0]];$("cnt").textContent=`Question ${i+1} of ${set.length}`;
+ $("prog").style.width=(i/set.length*100)+"%";$("qtext").textContent=q[1];
+ $("opts").innerHTML=q[2].map((o,k)=>`<button class="opt" data-k="${k}"><span class="k">${L[k]}</span><span>${o}</span></button>`).join("");
+ $("fb").className="fb hide";$("next").className="btn hide";$("next").textContent=i==set.length-1?"See results":"Next question";
+}
+$("opts").addEventListener("click",e=>{
+ const b=e.target.closest(".opt");if(!b||locked)return;locked=true;
+ const k=+b.dataset.k,q=set[i],good=k==q[3];ans[i]=k;
+ [...$("opts").children].forEach((c,j)=>{c.disabled=true;if(j==q[3])c.classList.add("ok");else if(j==k)c.classList.add("no")});
+ const f=$("fb");f.className="fb "+(good?"ok":"no");
+ f.textContent=(good?"Correct. ":`Not quite. The answer is ${L[q[3]]}. `)+(q[4]||"");
+ $("next").className="btn";$("next").focus();
+});
+$("next").onclick=()=>{i++;i<set.length?render():finish()};
+function finish(){
+ show("result");$("prog").style.width="100%";
+ const s=set.reduce((a,q,j)=>a+(ans[j]==q[3]),0),n=set.length,p=s/n*100;
+ $("sc").textContent=s;$("of").textContent=" / "+n;
+ $("band").textContent=p>=90?"Excellent":p>=75?"Very good":p>=60?"Good":p>=40?"Needs practice":"Revise the concepts and try again";
+ $("tbars").innerHTML=T.map((nm,t)=>{const idx=set.map((q,j)=>q[0]==t?j:-1).filter(j=>j>=0);if(!idx.length)return"";
+  const c=idx.filter(j=>ans[j]==set[j][3]).length;
+  return`<div class="tb"><div class="lbl"><span>${nm}</span><span>${c} / ${idx.length}</span></div><div class="bar" style="margin:0"><i style="width:${c/idx.length*100}%"></i></div></div>`}).join("");
+ const wrong=set.map((q,j)=>j).filter(j=>ans[j]!=set[j][3]);
+ $("rwrong").classList.toggle("hide",!wrong.length);
+ $("revh").textContent=wrong.length?"Review your misses":"No misses. Nicely done.";
+ $("rev").innerHTML=wrong.map(j=>{const q=set[j];return`<div class="rev"><div class="q2">${q[1]}</div><div class="a">Your answer: ${L[ans[j]]}. ${q[2][ans[j]]}</div><div class="c">Correct: ${L[q[3]]}. ${q[2][q[3]]}</div>${q[4]?`<div style="color:var(--mute);margin-top:4px">${q[4]}</div>`:""}</div>`}).join("");
+}
+$("topics").onclick=e=>{const b=e.target.closest(".topic");if(b){const t=+b.dataset.t;start(Q.filter(q=>q[0]==t),T[t])}};
+$("startAll").onclick=()=>start(Q,"All topics");
+$("shuf").onclick=()=>{shuffle=!shuffle;$("shuf").textContent="Shuffle question order: "+(shuffle?"on":"off")};
+$("quit").onclick=()=>show("home");$("home2").onclick=()=>show("home");
+$("retry").onclick=()=>start(set.slice().sort((a,b)=>Q.indexOf(a)-Q.indexOf(b)),label);
+$("rwrong").onclick=()=>start(set.filter((q,j)=>ans[j]!=q[3]),"Missed questions");
+</script>
+</body>
+</html>
